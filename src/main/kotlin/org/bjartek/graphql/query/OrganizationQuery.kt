@@ -40,7 +40,7 @@ data class Company(val id: Int, val name: String)
 //resolve all companies in one remote call
 @Component
 class CompanyDataLoader : MultipleKeysDataLoader<Int, Company> {
-    override suspend fun getByKeys(keys: MutableSet<Int>): Map<Int, Try<Company>> {
+    override suspend fun getByKeys(keys: Set<Int>): Map<Int, Try<Company>> {
         return keys.associateWith {
             if(it != 1) {
                 Try.failed<Company>(RuntimeException("Failed"))

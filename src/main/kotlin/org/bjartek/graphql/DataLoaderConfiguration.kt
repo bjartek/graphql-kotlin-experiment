@@ -43,14 +43,14 @@ interface KeyDataLoader<K, V> {
 }
 
 interface MultipleKeysDataLoader<K, V> {
-    suspend fun getByKeys(keys: MutableSet<K>): Map<K, Try<V>>
+    suspend fun getByKeys(keys: Set<K>): Map<K, Try<V>>
 }
 
 /*
   Use this if you have a service that loads multiple ids.
  */
 fun <K, V> batchDataLoaderMappedMultiple(keysDataLoader: MultipleKeysDataLoader<K, V>): DataLoader<K, V> =
-    DataLoader.newMappedDataLoaderWithTry { keys: MutableSet<K> ->
+    DataLoader.newMappedDataLoaderWithTry { keys: Set<K> ->
         GlobalScope.async {
             keysDataLoader.getByKeys(keys)
         }.asCompletableFuture()
