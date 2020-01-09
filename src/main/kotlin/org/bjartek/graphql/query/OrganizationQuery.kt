@@ -6,7 +6,9 @@ import com.expediagroup.graphql.spring.operations.Query
 import graphql.schema.DataFetchingEnvironment
 import org.bjartek.graphql.KeyDataLoader
 import org.bjartek.graphql.MultipleKeysDataLoader
+import org.bjartek.graphql.MyGraphQLContext
 import org.bjartek.graphql.loadOptional
+import org.dataloader.BatchLoaderEnvironment
 import org.dataloader.Try
 import org.springframework.stereotype.Component
 
@@ -41,7 +43,8 @@ data class Company(val id: Int, val name: String)
 //resolve all companies in one remote call
 @Component
 class CompanyDataLoader : MultipleKeysDataLoader<Int, Company> {
-    override suspend fun getByKeys(keys: Set<Int>): Map<Int, Try<Company>> {
+    override suspend fun getByKeys(keys: Set<Int>, ctx: MyGraphQLContext): Map<Int, Try<Company>> {
+
         return keys.associateWith {
             if(it != 1) {
                 Try.failed<Company>(RuntimeException("Failed"))
@@ -55,7 +58,7 @@ class CompanyDataLoader : MultipleKeysDataLoader<Int, Company> {
 //this is not in use right now, only an example on how to resolve individual companies against something
 @Component
 class CompanyDataLoader2 : KeyDataLoader<Int, Company> {
-    override suspend fun getByKey(key: Int): Company {
+    override suspend fun getByKey(key: Int, env: MyGraphQLContext): Company {
         if (key != 1) {
             throw RuntimeException("Failed")
         }
