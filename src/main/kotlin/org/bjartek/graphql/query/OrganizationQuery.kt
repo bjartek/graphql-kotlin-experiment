@@ -30,6 +30,7 @@ data class Employee(
     @GraphQLIgnore
     val companyId: Int
 ) {
+
     @GraphQLDescription("The company for the employee")
     suspend fun company(dfe: DataFetchingEnvironment)= dfe.loadOptional<Int, Company>(companyId)
 
