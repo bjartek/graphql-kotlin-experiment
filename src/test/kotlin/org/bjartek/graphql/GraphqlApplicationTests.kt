@@ -1,4 +1,4 @@
-package no.skatteetaten.aurora.example.graphql
+package org.bjartek.graphql
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

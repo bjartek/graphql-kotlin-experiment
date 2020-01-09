@@ -1,4 +1,4 @@
-package no.skatteetaten.aurora.example.graphql
+package org.bjartek.graphql
 
 import com.expediagroup.graphql.spring.exception.SimpleKotlinGraphQLError
 import com.expediagroup.graphql.spring.execution.DataLoaderRegistryFactory
@@ -16,8 +16,8 @@ import java.util.concurrent.Executors
 
 @Configuration
 class DataLoaderConfiguration(
-    val keyLoaders: List<KeyDataLoader<*, *>>,
-    val multipleKeysDataLoaders: List<MultipleKeysDataLoader<*, *>>
+        val keyLoaders: List<KeyDataLoader<*, *>>,
+        val multipleKeysDataLoaders: List<MultipleKeysDataLoader<*, *>>
 ) {
     @Bean
     fun dataLoaderRegistryFactory(): DataLoaderRegistryFactory {

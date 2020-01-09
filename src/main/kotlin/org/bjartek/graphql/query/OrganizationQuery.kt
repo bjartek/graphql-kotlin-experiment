@@ -1,21 +1,21 @@
-package no.skatteetaten.aurora.example.graphql.query
+package org.bjartek.graphql.query
 
 import com.expediagroup.graphql.annotations.GraphQLDescription
 import com.expediagroup.graphql.annotations.GraphQLIgnore
 import com.expediagroup.graphql.spring.operations.Query
 import graphql.schema.DataFetchingEnvironment
-import no.skatteetaten.aurora.example.graphql.KeyDataLoader
-import no.skatteetaten.aurora.example.graphql.MultipleKeysDataLoader
-import no.skatteetaten.aurora.example.graphql.loadOptional
+import org.bjartek.graphql.KeyDataLoader
+import org.bjartek.graphql.MultipleKeysDataLoader
+import org.bjartek.graphql.loadOptional
 import org.dataloader.Try
 import org.springframework.stereotype.Component
 
 @Component
 class EmployeeQuery : Query {
     private val employees = listOf(
-        Employee(name = "Mike", companyId = 1),
-        Employee(name = "John", companyId = 1),
-        Employee(name = "Steve", companyId = 2)
+            Employee(name = "Mike", companyId = 1),
+            Employee(name = "John", companyId = 1),
+            Employee(name = "Steve", companyId = 2)
     )
 
     @GraphQLDescription("Get all employees")
@@ -45,7 +45,7 @@ class CompanyDataLoader : MultipleKeysDataLoader<Int, Company> {
             if(it != 1) {
                 Try.failed<Company>(RuntimeException("Failed"))
             } else {
-                Try.succeeded(Company(id= it, name = "Teh Company"))
+                Try.succeeded(Company(id = it, name = "Teh Company"))
             }
         }
     }

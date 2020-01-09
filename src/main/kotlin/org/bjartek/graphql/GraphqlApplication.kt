@@ -1,4 +1,4 @@
-package no.skatteetaten.aurora.example.graphql
+package org.bjartek.graphql
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
