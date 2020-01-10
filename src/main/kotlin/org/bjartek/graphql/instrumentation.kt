@@ -28,12 +28,13 @@ class UsageInstrumentation : SimpleInstrumentation() {
             executionInput: ExecutionInput?,
             parameters: InstrumentationExecutionParameters?
     ): ExecutionInput {
+
         executionInput?.let {
-            val query = it.query.removeNewLines()
-            if (query.trimStart().startsWith("mutation")) {
-                logger.info("mutation=\"$query\" - variable-keys=${it.variables.keys}")
-            } else {
-                if(!query.startsWith("query IntrospectionQuery")) {
+            if (it.operationName != "IntrospectionQuery") {
+                val query = it.query.removeNewLines()
+                if (query.trimStart().startsWith("mutation")) {
+                    logger.info("mutation=\"$query\" - variable-keys=${it.variables.keys}")
+                } else {
                     val variables = if (it.variables.isEmpty()) "" else " - variables=${it.variables}"
                     logger.info("query=\"$query\"$variables")
                 }
@@ -47,8 +48,11 @@ class UsageInstrumentation : SimpleInstrumentation() {
             parameters: InstrumentationExecutionParameters?
     ): ExecutionContext {
         val selectionSet = executionContext?.operationDefinition?.selectionSet ?: SelectionSet(emptyList())
-        fieldUsage.update(selectionSet)
-        userUsage.update(executionContext)
+
+        if(executionContext?.operationDefinition?.name != "IntrospectionQuery") {
+            fieldUsage.update(selectionSet)
+            userUsage.update(executionContext)
+        }
         return super.instrumentExecutionContext(executionContext, parameters)
     }
 
