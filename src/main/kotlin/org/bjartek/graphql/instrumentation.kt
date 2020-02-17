@@ -81,7 +81,7 @@ class UserUsage {
     val users: ConcurrentHashMap<String, LongAdder> = ConcurrentHashMap()
 
     fun update(executionContext: ExecutionContext?) {
-        val context = executionContext?.context
+        val context = executionContext?.getContext<MyGraphQLContext>()
         if (context is MyGraphQLContext) {
             users.computeIfAbsent(context.user ?: "anonymous") { LongAdder() }.increment()
         }

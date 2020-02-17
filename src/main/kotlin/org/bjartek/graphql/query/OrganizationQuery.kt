@@ -58,7 +58,7 @@ class CompanyDataLoader : MultipleKeysDataLoader<Int, Company> {
 //this is not in use right now, only an example on how to resolve individual companies against something
 @Component
 class CompanyDataLoader2 : KeyDataLoader<Int, Company> {
-    override suspend fun getByKey(key: Int, env: MyGraphQLContext): Company {
+    override suspend fun getByKey(key: Int, ctx: MyGraphQLContext): Company {
         if (key != 1) {
             throw RuntimeException("Failed")
         }

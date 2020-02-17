@@ -98,9 +98,19 @@ fun <K, V> batchDataLoaderMappedSingle(keyDataLoader: KeyDataLoader<K, V>): Data
 
   If the loading throws and error the entire query will fail
  */
-suspend inline fun <Key, reified Value> DataFetchingEnvironment.load(key: Key): Value {
-    val loaderName = "${Value::class.java.simpleName}DataLoader"
+suspend inline fun <Key, reified Value> DataFetchingEnvironment.load(key: Key, loaderPrefix: String = Value::class.java.simpleName): Value {
+    val loaderName = "${loaderPrefix}DataLoader"
     return this.getDataLoader<Key, Value>(loaderName).load(key, this.getContext()).await()
+}
+
+/*
+  Load a single key of type Key into a value of type Value using a dataloader named <Value>DataLoader
+
+  If the loading throws and error the entire query will fail
+ */
+suspend inline fun <Key, reified Value> DataFetchingEnvironment.loadMany(key: Key): List<Value> {
+    val loaderName = "${Value::class.java.simpleName}ListDataLoader"
+    return this.getDataLoader<Key, List<Value>>(loaderName).load(key, this.getContext()).await()
 }
 
 /*

@@ -16,9 +16,13 @@ repositories {
 }
 
 dependencies {
-	implementation("com.expediagroup:graphql-kotlin-spring-server:1.4.2")
+	implementation("com.expediagroup:graphql-kotlin-spring-server:2.0.0-RC6")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("io.github.microutils:kotlin-logging:1.7.6")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
